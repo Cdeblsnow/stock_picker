@@ -6,7 +6,7 @@ def stock_prices(array)
 
   profit = 0
   max_profit = 0
-  best_combination = []
+  best_combination = Array.new(2)
   highest_index = 0
   lowest_index = 0
   lowest_buy = 0
@@ -20,11 +20,13 @@ def stock_prices(array)
       highest_sell = array.sort[-iterator]
       highest_index = array.find_index(highest_sell)
       profit = highest_sell - lowest_buy 
-      max_profit = profit if  profit > max_profit &&  lowest_index < highest_index
-      max_profit 
+      if profit > max_profit && lowest_index < highest_index
+        max_profit = profit
+        best_combination[0] = lowest_index
+        best_combination[1] = highest_index
+      end
     end 
   end
-  best_combination = [lowest_index,highest_index]
   p "The best combination is #{best_combination} for a profit of #{max_profit}"
 end 
 
