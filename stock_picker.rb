@@ -5,23 +5,23 @@ prices_array = prices_array.map{|number| number.to_i}
 def stock_prices(array)
 
   profit = 0
-  lowest_buy = array.min 
-  highest_sell = array.max
+  max_profit = 0
   best_combination = []
+  highest_index = 0
+  lowest_index = 0
 
   array.length.times do |counter|
-    highest_sell = array.sort(-counter)
-    
-    if array.find_index(highest_sell) > array.find_index(lowest_buy)
-      profit = highest_sell - lowest_buy
-      best_combination = [array.find_index(lowest_buy), array.find_index(highest_sell)]
-      p "#{best_combination} for a profit of #{profit}"
-      break
-        
-    elsif array.find_index(highest_sell) < array.find_index(lowest_buy)
-      p "There is not best day to sell"
-    
-    end
-  end 
+    lowest_buy = array.sort[counter]
+    lowest_index = array.find_index(lowest_buy)
+
+    array.length.times do |iterator|
+      highest_sell = array.sort[-counter]
+      highest_index = array.find_index(highest_sell)
+      profit = highest_sell - lowest_buy 
+      max_profit = profit if  profit > max_profit &&  lowest_index < highest_index 
+    end 
+  end
+  best_combination = [lowest_index,highest_index]
+  p "The best combination is #{best_combination} for a profit of #{max_profit}"
 end 
 
